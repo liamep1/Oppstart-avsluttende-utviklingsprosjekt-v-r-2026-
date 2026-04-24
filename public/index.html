@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="no">
+    <head>
+        <meta charset="UTF-8" />
+        <title>EventLine</title>
+        <link rel="stylesheet" href="/app.css" />
+        <script src="/app.js" defer></script>
+        <script src="/opprett-tidslinje.js" defer></script>
+    </head>
+    <body>
+        <h1>EventLine</h1>
+        <p id="tekst">Velg en tidslinje</p>
+
+        <h2>Tidslinjer</h2>
+        <ul id="tidslinjer"></ul>
+
+        <h2>Opprett tidslinje</h2>
+        <form id="skjema">
+            <input type="text" id="navn" placeholder="Navn på tidslinje" />
+            <input type="text" id="brukernavn" placeholder="Brukernavn" />
+            <select id="synlighet">
+                <option value="offentlig">Offentlig</option>
+                <option value="privat">Privat</option>
+            </select>
+            <button type="submit">Opprett tidslinje</button>
+        </form>
+
+        <p id="melding"></p>
+    </body>
+</html>
