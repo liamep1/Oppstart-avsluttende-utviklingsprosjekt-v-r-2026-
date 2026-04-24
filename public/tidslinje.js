@@ -33,7 +33,7 @@ async function start() {
 
     hendelser.innerHTML = "";
 
-    // Looppar gjennom alle hendelsene og viser dei som kort på sida
+    // Loopper gjennom alle hendelsene og viser de som kort på sida
     for (const hendelse of hendelserListe) {
         const li = document.createElement("li");
         const kort = document.createElement("div");
