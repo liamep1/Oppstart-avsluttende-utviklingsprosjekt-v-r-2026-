@@ -5,7 +5,7 @@ const path = require("path");
 const { createClient } = require("@supabase/supabase-js");
 
 const app = express();
-const port = 3001;
+const port = 30003;
 
 // Koble til Supabase-databasen
 const supabase = createClient(
@@ -17,20 +17,20 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
 
-// ----------------------------------------
+
 // HENT ALLE TIDSLINJER
 // Brukes på forsiden for å vise alle tidslinjer
-// ----------------------------------------
+
 app.get("/api/tidslinjer", async (req, res) => {
     const svar = await supabase.from("Tidslinje").select("*");
     res.json(svar.data);
 });
 
 
-// ----------------------------------------
-// HENT ÉI TIDSLINJE
+
+// HENT EN TIDSLINJE
 // Brukes på tidslinje-siden for å vise tittel og info
-// ----------------------------------------
+
 app.get("/api/tidslinje", async (req, res) => {
     const id = req.query.tidslinjeId;
 
@@ -44,10 +44,9 @@ app.get("/api/tidslinje", async (req, res) => {
 });
 
 
-// ----------------------------------------
 // HENT ALLE HENDELSER I EI TIDSLINJE
 // Brukes på tidslinje-siden for å vise hendelsane
-// ----------------------------------------
+
 app.get("/api/hendelser", async (req, res) => {
     const tidslinjeId = req.query.tidslinjeId;
 
@@ -60,10 +59,10 @@ app.get("/api/hendelser", async (req, res) => {
 });
 
 
-// ----------------------------------------
-// LAG EI NY TIDSLINJE
+
+// LAG EN NY TIDSLINJE
 // Brukes når bruker fyller ut skjemaet på forsiden
-// ----------------------------------------
+
 app.post("/api/tidslinjer", async (req, res) => {
     const { navn, brukernavn, synlighet } = req.body;
 
@@ -76,10 +75,10 @@ app.post("/api/tidslinjer", async (req, res) => {
 });
 
 
-// ----------------------------------------
-// LAG EI NY HENDELSE
+
+// LAG EN HENDELSE
 // Brukes når bruker fyller ut skjemaet på tidslinje-siden
-// ----------------------------------------
+
 app.post("/api/hendelser", async (req, res) => {
     const { navn, dato, beskrivelse, bilde, tidslinje_id } = req.body;
 
@@ -92,10 +91,10 @@ app.post("/api/hendelser", async (req, res) => {
 });
 
 
-// ----------------------------------------
-// SLETT EI TIDSLINJE
+
+// SLETT EN TIDSLINJE
 // Sletter først alle hendelsane i tidslinjen, så tidslinjen sjølv
-// ----------------------------------------
+
 app.delete("/api/tidslinjer/:id", async (req, res) => {
     const id = req.params.id;
 
@@ -107,10 +106,10 @@ app.delete("/api/tidslinjer/:id", async (req, res) => {
 });
 
 
-// ----------------------------------------
-// SLETT EI HENDELSE
-// Sletter berre den eine hendelsen
-// ----------------------------------------
+
+// SLETT EN HENDELSE
+// Sletter berre den ene hendelsen
+
 app.delete("/api/hendelser/:id", async (req, res) => {
     const id = req.params.id;
 

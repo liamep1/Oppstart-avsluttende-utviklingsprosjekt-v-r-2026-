@@ -82,22 +82,13 @@ function leggTilInfo(tekstlinje) {
     li.textContent = tekstlinje;
     info.appendChild(li);
 }
-
-// SLETT TIDSLINJE - Sletter heile tidslinjen
-// Denne funksjonen køyrer når bruker klikkar "Slett tidslinje"-knappen
-// Den spør om bekreftelse først, så sender ein DELETE-request til serveren
+// Sletter heile tidslinjen
 async function slettTidslinje() {
-    // Spør bruker om bekreftelse før vi sletter noko
-    if (confirm("Er du sikker på at du vil slette denne tidslinjen?")) {
-        // Sender DELETE-request til serveren med tidslinjeId
-        const svar = await fetch(`/api/tidslinjer/${tidslinjeId}`, {
-            method: "DELETE"
-        });
+    if (confirm("oj oj oj..... Sikker på at du vil slette denne tidslinjen?")) {
+        const svar = await fetch(`/api/tidslinjer/${tidslinjeId}`, { method: "DELETE" });
         
-        // Sjekk om slettinga var vellykka
         if (svar.ok) {
             alert("Tidslinje slettet!");
-            // Send bruker tilbake til heimesida
             window.location.href = "/";
         } else {
             alert("Feil ved sletting av tidslinje");
@@ -105,21 +96,13 @@ async function slettTidslinje() {
     }
 }
 
-// SLETT HENDELSE - Sletter ein enkelt hendelse frå tidslinjen
-// Mottaker: hendelseId (IDen på hendelsen som skal deletast)
-// Denne funksjonen køyrer når bruker klikkar "Slett hendelse"-knappen på ein hendelse
+// Sletter en enkelt hendelse
 async function slettHendelse(hendelseId) {
-    // Spør bruker om bekreftelse før vi sletter
-    if (confirm("Er du sikker på at du vil slette denne hendelsen?")) {
-        // Sender DELETE-request til serveren med hendelseId
-        const svar = await fetch(`/api/hendelser/${hendelseId}`, {
-            method: "DELETE"
-        });
+    if (confirm("oj oj oj..... Sikker på at du vil slette denne hendelsen?")) {
+        const svar = await fetch(`/api/hendelser/${hendelseId}`, { method: "DELETE" });
         
-        // Sjekk om slettinga var vellykka
         if (svar.ok) {
             alert("Hendelse slettet!");
-            // Last inn siden på nytt så dei sletta hendelsen forsvinn
             location.reload();
         } else {
             alert("Feil ved sletting av hendelse");
@@ -127,43 +110,26 @@ async function slettHendelse(hendelseId) {
     }
 }
 
-// OPPRETT HENDELSE - Opprettar ein ny hendelse i tidslinjen
-// Denne funksjonen køyrer når bruker submittar "Legg til hendelse"-skjemaet
+// Opprettar en ny hendelse
 async function opprettHendelse(event) {
-    // Stopp standard form-handtering
     event.preventDefault();
 
-    // Hent verdiane frå skjemaet
     const navn = document.getElementById("hendelsNavn").value;
     const dato = document.getElementById("hendelseDato").value;
     const beskrivelse = document.getElementById("hendelseBeskrivelse").value;
     const bilde = document.getElementById("hendelseBilde").value;
 
-    // Sender POST-request til serveren med data om den nye hendelsen
     const svar = await fetch("/api/hendelser", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            navn: navn,
-            dato: dato,
-            beskrivelse: beskrivelse,
-            bilde: bilde,
-            tidslinje_id: tidslinjeId
-        })
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ navn, dato, beskrivelse, bilde, tidslinje_id: tidslinjeId })
     });
 
-    // Sjekk om opprettinga var vellykka
     if (svar.ok) {
         const nyHendelse = await svar.json();
-        hendelsesMelding.textContent = `Hendelse \"${navn}\" oppretta!`;
-        // Tøm skjemaet
+        hendelsesMelding.textContent = `Hendelse "${navn}" oppretta!`;
         hendelseSkjema.reset();
-        // Last inn siden på nytt etter 2 sekund så den nye hendelsen dukkar opp
-        setTimeout(() => {
-            location.reload();
-        }, 2000);
+        setTimeout(() => location.reload(), 2000);
     } else {
         hendelsesMelding.textContent = "Feil ved opprettinga av hendelse";
     }

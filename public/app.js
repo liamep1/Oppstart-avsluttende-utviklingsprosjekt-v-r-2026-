@@ -9,6 +9,7 @@ async function start() {
     const tidslinjer = await svar.json();
 
     for (const tidslinje of tidslinjer) {
+        
         const li = document.createElement("li");
         const kort = document.createElement("div");
         const navn = document.createElement("h3");
