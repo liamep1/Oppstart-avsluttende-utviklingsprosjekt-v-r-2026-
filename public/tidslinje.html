@@ -2,28 +2,35 @@
 <html lang="no">
     <head>
         <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Tidslinje</title>
         <link rel="stylesheet" href="/app.css" />
-        <script src="/tidslinje.js" defer></script>
+        <script src="tidslinje.js" defer></script>
     </head>
     <body>
-        <p><a class="knapp tilbake" href="/">Tilbake til forsiden</a></p>
-        <button id="slettKnapp" class="knapp slett">Slett tidslinje</button>
-        <h1 id="tittel">Tidslinje</h1>
-        <p id="tekst"></p>
-        <ul id="info"></ul>
+        <div class="container">
+            <div class="toppfelt">
+                <a class="knapp tilbake" href="/">Tilbake til forsiden</a>
+                <button id="slettKnapp" class="knapp slett" type="button">Slett tidslinje</button>
+            </div>
 
-        <h2>Hendelser</h2>
-        <ul id="hendelser"></ul>
+            <h1 id="tittel">Tidslinje</h1>
+            <p id="tekst"></p>
+            <ul id="info"></ul>
 
-        <h2>Legg til hendelse</h2>
-        <form id="hendelseSkjema">
-            <label>Namn: <input type="text" id="hendelsNavn" required /></label>
-            <label>Dato: <input type="date" id="hendelseDato" required /></label>
-            <label>Beskriving: <input type="text" id="hendelseBeskrivelse" /></label>
-            <label>Bilde-URL: <input type="text" id="hendelseBilde" /></label>
-            <button type="submit" class="knapp">Legg til hendelse</button>
-        </form>
-        <p id="hendelsesMelding"></p>
+            <h2>Hendelser</h2>
+            <ul id="hendelser">
+                <!-- fylles med javascript -->
+            </ul> 
+
+            <h2>Legg til hendelse</h2>
+            <form id="hendelseSkjema">
+                <label>Navn: <input type="text" id="hendelsNavn" required /></label>
+                <label>Dato: <input type="date" id="hendelseDato" required /></label>
+                <label>Beskrivelse: <input type="text" id="hendelseBeskrivelse" /></label>
+                <button type="submit" class="knapp">Legg til hendelse</button>
+            </form>
+            <p id="hendelsesMelding"></p>
+        </div>
     </body>
 </html>
