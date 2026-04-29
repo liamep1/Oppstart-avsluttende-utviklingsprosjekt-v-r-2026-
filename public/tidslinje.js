@@ -15,11 +15,12 @@ slettKnapp.addEventListener("click", slettTidslinje);
 // Når hendelseSkjemaet blir sendt inn, kalles funksjonen opprettHendelse
 hendelseSkjema.addEventListener("submit", opprettHendelse);
 
-start();
+hentTidslinjer();
 
-async function start() {
+async function hentTidslinjer() {
     try {
-        const svarTidslinje = await fetch(`/api/tidslinje?tidslinjeId=${tidslinjeId}`);
+        //henter tidslinje
+        const svarTidslinje = await fetch(`/api/tidslinje/${tidslinjeId}`);
 
         if (!svarTidslinje.ok) {
             throw new Error("Kunne ikke hente tidslinjen");
@@ -27,7 +28,7 @@ async function start() {
 
         const tidslinje = await svarTidslinje.json();
 
-        const svarHendelser = await fetch(`/api/hendelser?tidslinjeId=${tidslinjeId}`);
+        const svarHendelser = await fetch(`/api/hendelser/${tidslinjeId}`);
 
         if (!svarHendelser.ok) {
             throw new Error("Kunne ikke hente hendelser");
@@ -39,9 +40,7 @@ async function start() {
         tekst.textContent = `Her ser du alt i tidslinjen ${tidslinje.navn}.`;
 
         leggTilInfo(`Tidslinje-id: ${tidslinje.id}`);
-        if (tidslinje.brukernavn) {
-            leggTilInfo(`Laget av: ${tidslinje.brukernavn}`);
-        }
+        leggTilInfo(`Laget av: ${tidslinje?.brukernavn}`);
         leggTilInfo(`Synlighet: ${tidslinje.synlighet}`);
         leggTilInfo(`Opprettet: ${tidslinje.opprettet_dato}`);
 
@@ -96,7 +95,7 @@ async function start() {
 }
 
 // Sletter hele tidslinjen
-async function slettTidslinje() {
+async function slettTidslinje(event) {
     if (confirm("oj oj oj..... Sikker på at du vil slette denne tidslinjen?")) {
         try {
             const svar = await fetch(`/api/tidslinjer/${tidslinjeId}`, { method: "DELETE" });
@@ -161,3 +160,4 @@ async function opprettHendelse(event) {
         hendelsesMelding.textContent = `Får ikke kontakt med serveren på ${serverAdresse}. Start Node-serveren og prøv igjen.`;
     }
 }
+

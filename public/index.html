@@ -9,12 +9,18 @@
         <script src="opprett-tidslinje.js" defer></script>
     </head>
     <body>
+          <h1 id="tall">
+                
+            </h1>
         <div class="container">
             <h1>EventLine</h1>
             <p id="tekst">Velg en tidslinje</p>
 
             <h2>Tidslinjer</h2>
-            <ul id="tidslinjer"></ul>
+            <ul id="tidslinjer">
+
+
+            </ul>
 
             <h2>Opprett tidslinje</h2>
             <form id="skjema">
@@ -22,19 +28,19 @@
                 <input
                     type="text"
                     id="brukernavn"
-                    list="brukerforslag"
                     placeholder="Lina"
-                    autocomplete="off"
                     required
                 />
-                <datalist id="brukerforslag"></datalist>
                 <select id="synlighet">
                     <option value="offentlig">Offentlig</option>
                     <option value="privat">Privat</option>
                 </select>
                 <button type="submit">Opprett tidslinje</button>
             </form>
-            <p id="melding"></p>
+            
+            <p id="melding">
+
+            </p>
         </div>
     </body>
 </html>

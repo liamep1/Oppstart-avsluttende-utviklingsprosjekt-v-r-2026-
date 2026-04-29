@@ -8,22 +8,11 @@ const app = express();
 const port = Number(process.env.PORT) || 3004;
 const host = process.env.HOST || "127.0.0.1";
 
-function hentMiljoVariabel(navn) {
-    const verdi = process.env[navn];
-
-    if (!verdi) {
-        throw new Error(
-            `Mangler miljøvariabelen ${navn}. Kopier .env.example til .env og fyll inn riktige Supabase-verdier.`
-        );
-    }
-
-    return verdi;
-}
 
 // Koble til Supabase-databasen
 const supabase = createClient(
-    hentMiljoVariabel("SUPABASE_URL"),
-    hentMiljoVariabel("SUPABASE_ANON_KEY")
+    process.env.SUPABASE_URL,
+    process.env.SUPABASE_ANON_KEY
 );
 
 app.use(express.json());
@@ -32,6 +21,12 @@ app.use(express.static(path.join(__dirname, "public")));
 
 
 // HENT ALLE TIDSLINJER
+// app.get("/tidslinje", async (req, res) => {
+//     const svar = await supabase.from("Tidslinje").select("*");
+//     res.sendFile(path.join(__dirname, "public", "tidslinje.html"));
+// });
+
+
 // Brukes på forsiden for å vise alle tidslinjer
 
 app.get("/api/tidslinjer", async (req, res) => {
@@ -62,8 +57,8 @@ app.get("/api/brukere", async (req, res) => {
 // HENT EN TIDSLINJE
 // Brukes på tidslinje-siden for å vise tittel og info
 
-app.get("/api/tidslinje", async (req, res) => {
-    const id = req.query.tidslinjeId;
+app.get("/api/tidslinje/:tidslinjeId", async (req, res) => {
+    const id = req.params.tidslinjeId;
 
     const svar = await supabase
         .from("Tidslinje")
@@ -78,8 +73,8 @@ app.get("/api/tidslinje", async (req, res) => {
 // HENT ALLE HENDELSER I EN TIDSLINJE
 // Brukes på tidslinje-siden for å vise hendelsene
 
-app.get("/api/hendelser", async (req, res) => {
-    const tidslinjeId = req.query.tidslinjeId;
+app.get("/api/hendelser/:tidslinjeId", async (req, res) => {
+    const tidslinjeId = req.params.tidslinjeId;
 
     const svar = await supabase
         .from("Hendelse")
@@ -113,6 +108,7 @@ app.post("/api/tidslinjer", async (req, res) => {
         .eq("brukernavn", brukernavn)
         .maybeSingle();
 
+
     if (brukerSvar.error) {
         console.error("Kunne ikke sjekke brukernavn:", brukerSvar.error);
         return res.status(500).json({ feil: "Kunne ikke sjekke brukeren i databasen." });
@@ -126,11 +122,6 @@ app.post("/api/tidslinjer", async (req, res) => {
         .from("Tidslinje")
         .insert([{ navn, brukernavn, synlighet }])
         .select();
-
-    if (svar.error) {
-        console.error("Kunne ikke opprette tidslinje:", svar.error);
-        return res.status(500).json({ feil: "Kunne ikke opprette tidslinjen i databasen." });
-    }
 
     res.status(201).json(svar.data[0]);
 });
@@ -188,6 +179,8 @@ app.delete("/api/hendelser/:id", async (req, res) => {
 
     await supabase.from("Hendelse").delete().eq("id", id);
 
+    
+
     res.json({ success: true });
 });
 
@@ -211,3 +204,15 @@ server.on("error", (feil) => {
 
     process.exit(1);
 });
+
+
+
+
+
+
+
+
+
+
+
+

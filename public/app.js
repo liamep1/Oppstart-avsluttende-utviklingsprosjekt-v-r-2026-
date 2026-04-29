@@ -4,6 +4,9 @@ const tekst = document.getElementById("tekst");
 const tidslinjelisten = document.getElementById("tidslinjer");
 const serverAdresse = window.location.origin;
 
+
+
+
 start();
 
 async function start() {
@@ -55,3 +58,5 @@ async function start() {
         tekst.textContent = `Får ikke kontakt med serveren på ${serverAdresse}. Start Node-serveren og prøv igjen.`;
     }
 }
+
+
